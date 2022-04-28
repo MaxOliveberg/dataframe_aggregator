@@ -1,6 +1,9 @@
-This is a quick tool I made to average dataframes and write them to .csv's continuously. The rationale is that I have a Monte-Carlo simulation where the results may be too large to keep in memory, so I want to continously write to files as to not lose any data.
+This is a quick tool I made to average dataframes and write them to .csv's continuously. The rationale is that I have a
+Monte-Carlo simulation where the results may be too large to keep in memory, so I want to continuously write to file as
+to not lose any data.
 
-Currently, the code assumes that the rows in your frame are ordered between runs.
+As of now, it is very niche to my use case. The code is formally untested and assumes that your dataframes will always
+have its rows in the same order. Thus, it can be haphazard to use.
 
 Install through:
 
