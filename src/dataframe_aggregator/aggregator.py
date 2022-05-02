@@ -132,9 +132,9 @@ class Aggregator:
         for field in interesting_fields:
             new_frame[field] = (aggregated_file[field] * n + additional_data[field]) / (n + 1)
             # Welford's online algorithm for unbiased sample variance
-            new_frame[field + "_var"] = aggregated_file[field + "_var"] + (1 / n) * (
+            new_frame[str(field) + "_var"] = aggregated_file[str(field) + "_var"] + (1 / n) * (
                     additional_data[field] - aggregated_file[field]) ** 2 - (1 / (n - 1)) * (
-                                            aggregated_file[field + "_var"])
+                                            aggregated_file[str(field) + "_var"])
         if self.__write_settings.running_writes:
             index = str(self.__write_index) if self.__write_settings.separate_files else ""
             path_and_name = self.__write_settings.path + self.__write_settings.filename + index
@@ -157,7 +157,7 @@ class Aggregator:
         for field_name in additional_data:
             if field_name not in aggregated_file:
                 raise MissingFieldException(field_name=field_name)
-            elif field_name + "_var" not in aggregated_file and field_name not in identifier_fields:
+            elif str(field_name) + "_var" not in aggregated_file and field_name not in identifier_fields:
                 raise MissingFieldException(field_name=field_name + "_var")
 
     @staticmethod
@@ -199,6 +199,6 @@ class Aggregator:
         print(interesting_fields)
         for field in interesting_fields:
             new_frame[field] = (aggregated_file[field] + additional_data[field]) / 2
-            new_frame[field + "_var"] = np.sqrt(
+            new_frame[str(field) + "_var"] = np.sqrt(
                 (aggregated_file[field] - new_frame[field]) ** 2 + (additional_data[field] - new_frame[field]) ** 2)
         return new_frame, MetaData(num_frames=2)
